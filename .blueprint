@@ -1,0 +1,38 @@
+created:
+    - database/factories/UserFactory.php
+    - database/factories/TaskStatusFactory.php
+    - database/factories/ProjectFactory.php
+    - database/factories/ProjectUserFactory.php
+    - database/factories/TaskFactory.php
+    - database/factories/TaskUserFactory.php
+    - database/factories/ActivityFactory.php
+    - database/factories/CommentFactory.php
+    - database/factories/AttachmentFactory.php
+    - database/migrations/2025_09_27_174520_create_users_table.php
+    - database/migrations/2025_09_27_174521_create_task_statuses_table.php
+    - database/migrations/2025_09_27_174522_create_projects_table.php
+    - database/migrations/2025_09_27_174523_create_project_users_table.php
+    - database/migrations/2025_09_27_174524_create_tasks_table.php
+    - database/migrations/2025_09_27_174525_create_task_users_table.php
+    - database/migrations/2025_09_27_174526_create_activities_table.php
+    - database/migrations/2025_09_27_174527_create_comments_table.php
+    - database/migrations/2025_09_27_174528_create_attachments_table.php
+    - app/Models/User.php
+    - app/Models/TaskStatus.php
+    - app/Models/Project.php
+    - app/Models/ProjectUser.php
+    - app/Models/Task.php
+    - app/Models/TaskUser.php
+    - app/Models/Activity.php
+    - app/Models/Comment.php
+    - app/Models/Attachment.php
+models:
+    User: { id: id, name: 'string:255', email: 'string:255 unique', password: 'string:255', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
+    TaskStatus: { id: id, name: 'string:255 unique', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
+    Project: { id: id, title: 'string:255', description: 'text nullable', owner_id: 'bigInteger unsigned foreign:users.id', due_at: 'dateTime nullable', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
+    ProjectUser: { id: false, project_id: 'bigIncrements foreign:projects.id', user_id: 'bigIncrements foreign:users.id' }
+    Task: { id: id, project_id: 'bigInteger unsigned foreign:projects.id', title: 'string:255', description: 'text nullable', status_id: 'bigInteger unsigned foreign:task_statuses.id', due_at: 'dateTime nullable', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
+    TaskUser: { id: false, task_id: 'bigIncrements foreign:tasks.id', user_id: 'bigIncrements foreign:users.id', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
+    Activity: { id: id, user_id: 'bigInteger nullable unsigned foreign:users.id', action: 'string:255', details: 'json nullable', loggable_id: 'bigInteger unsigned', loggable_type: 'string:255', created_at: 'timestamp nullable useCurrent' }
+    Comment: { id: id, body: text, user_id: 'bigInteger nullable unsigned foreign:users.id', commentable_id: 'bigInteger unsigned', commentable_type: 'string:255', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
+    Attachment: { id: id, name: 'string:255', path: 'string:255', size: 'integer nullable unsigned', user_id: 'bigInteger nullable unsigned foreign:users.id', attachable_id: 'bigInteger unsigned', attachable_type: 'string:255', created_at: 'timestamp nullable useCurrent', updated_at: 'timestamp nullable useCurrent' }
