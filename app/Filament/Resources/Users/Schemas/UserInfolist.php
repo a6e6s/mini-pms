@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users\Schemas;
 use App\Models\User;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class UserInfolist
@@ -13,29 +14,30 @@ class UserInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('email')
-                    ->label('Email address'),
-                TextEntry::make('email_verified_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('role')
-                    ->badge(),
-                IconEntry::make('is_active')
-                    ->boolean(),
-                TextEntry::make('phone')
-                    ->placeholder('-'),
-                TextEntry::make('address')
-                    ->placeholder('-'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn (User $record): bool => $record->trashed()),
-            ]);
+                Section::make(__('app.sections.user_details'))
+                    ->schema([
+                        TextEntry::make('id')->label(__('app.fields.user_id')),
+                        TextEntry::make('name')->label(__('app.fields.full_name')),
+                        TextEntry::make('email')->label(__('app.fields.email')),
+                        TextEntry::make('address')
+                            ->label(__('app.fields.address')),
+                        TextEntry::make('phone')
+                            ->label(__('app.fields.phone_number')),
+                        TextEntry::make('role')
+                            ->label(__('app.fields.role'))
+                            ->badge(),
+                        IconEntry::make('is_active')
+                            ->label(__('app.fields.active'))
+                            ->boolean(),
+                        TextEntry::make('created_at')
+                            ->label(__('app.fields.registered_at'))
+                            ->dateTime(),
+                        TextEntry::make('updated_at')
+                            ->label(__('app.fields.last_updated'))
+                            ->dateTime(),
+                    ])->columns(2)
+
+
+            ])->columns(1);
     }
 }
