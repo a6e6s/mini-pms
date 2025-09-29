@@ -54,5 +54,21 @@ class User extends Authenticatable
         ];
     }
 
+    // task relationship many to many with pivot table
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'task_users', 'user_id', 'task_id')
+            ->withTimestamps();
+    }
 
+    //project relationship
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'owner_id');
+    }
+    // comment relationship
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
 }

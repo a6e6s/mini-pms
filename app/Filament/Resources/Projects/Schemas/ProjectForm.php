@@ -3,9 +3,10 @@
 namespace App\Filament\Resources\Projects\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 
 class ProjectForm
@@ -14,11 +15,19 @@ class ProjectForm
     {
         return $schema
             ->components([
-                TextInput::make('title')
+                TextInput::make('title')->columnSpanFull()
                     ->required(),
-                Textarea::make('description')
-                    ->default(null)
-                    ->columnSpanFull(),
+                MarkdownEditor::make('description')
+                    ->fileAttachmentsDirectory('projects/attachments')
+                    ->toolbarButtons([
+                        ['bold', 'italic', 'strike', 'link'],
+                        ['heading'],
+                        ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
+                        ['table'],
+                        ['table'],
+                        ['undo', 'redo'],
+                    ])->columnSpanFull(),
+
                 Select::make('owner_id')
                     ->relationship('owner', 'name')
                     ->required(),
