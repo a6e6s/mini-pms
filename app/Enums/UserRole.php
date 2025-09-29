@@ -5,16 +5,16 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum UserRole: string implements HasLabel, HasColor
+enum UserRole: string implements HasColor, HasLabel
 {
     case ADMIN = 'admin';
-    case CLIENT = 'client';
+    case USER = 'user';
 
     public function getLabel(): string
     {
         return match ($this) {
             self::ADMIN => __('Admin'),
-            self::CLIENT => __('Client'),
+            self::USER => __('User'),
         };
     }
 
@@ -22,11 +22,12 @@ enum UserRole: string implements HasLabel, HasColor
     {
         return $this->getLabel();
     }
+
     public function getColor(): string
     {
         return match ($this) {
             self::ADMIN => 'primary',
-            self::CLIENT => 'success',
+            self::USER => 'success',
         };
     }
 }

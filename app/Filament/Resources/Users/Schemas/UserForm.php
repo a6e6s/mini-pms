@@ -15,7 +15,7 @@ class UserForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-           ->components([
+            ->components([
                 Section::make(__('app.sections.user_information'))
                     ->schema([
                         TextInput::make('name')
@@ -28,17 +28,17 @@ class UserForm
                             ->required(),
                         Select::make('role')
                             ->label(__('app.fields.role'))
-                            ->options(collect(UserRole::cases())->mapWithKeys(fn($case) => [
+                            ->options(collect(UserRole::cases())->mapWithKeys(fn ($case) => [
                                 $case->value => $case->getLabel(),
                             ]))
                             ->required()
-                            ->default(UserRole::CLIENT->value),
+                            ->default(UserRole::USER->value),
                         TextInput::make('password')
                             ->label(__('app.fields.password'))
                             ->password()
-                            ->dehydrateStateUsing(fn($state) => filled($state) ? bcrypt($state) : null)
-                            ->required(fn(string $context): bool => $context === 'create')
-                            ->dehydrated(fn($state) => filled($state))
+                            ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                            ->required(fn (string $context): bool => $context === 'create')
+                            ->dehydrated(fn ($state) => filled($state))
                             ->maxLength(255)
                             ->minLength(8),
                         TextInput::make('phone')

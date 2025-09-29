@@ -83,6 +83,12 @@ return [
         'admin_area_restricted' => 'You do not have permission to access this area.',
     ],
 
+    'filters' => [
+        'all' => 'All',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+    ],
+
     'pages' => [
         'upload_new_design' => 'Upload New Design',
         'file_format' => 'File Format',

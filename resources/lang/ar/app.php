@@ -84,6 +84,12 @@ return [
         'admin_area_restricted' => 'ليس لديك صلاحية للوصول إلى هذه المنطقة.',
     ],
 
+    'filters' => [
+        'all' => 'الكل',
+        'active' => 'نشط',
+        'inactive' => 'غير نشط',
+    ],
+
     'pages' => [
         'upload_new_design' => 'رفع تصميم جديد',
         'file_format' => 'تنسيق الملف',
