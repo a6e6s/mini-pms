@@ -16,6 +16,7 @@ class TasksTable
 {
     public static function configure(Table $table): Table
     {
+
         return $table
             ->columns([
                 TextColumn::make('project.title')
@@ -53,6 +54,6 @@ class TasksTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])->defaultView('grid');
     }
 }

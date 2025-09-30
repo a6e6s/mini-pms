@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Tasks\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -26,6 +27,14 @@ class TaskForm
                     ->relationship('status', 'name')
                     ->required(),
                 DateTimePicker::make('due_at'),
+                FileUpload::make('attachments')
+                    ->label('Attachments')
+                    ->multiple()
+                    ->disk('public')
+                    ->directory('attachments/tasks')
+                    ->fetchFileInformation(true)
+                    ->acceptedFileTypes(['application/pdf', 'image/*', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'])
+                    ->maxSize(10240) // 10MB,
             ]);
     }
 }

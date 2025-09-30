@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Tasks\Schemas;
 
 use App\Models\Task;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -32,6 +33,19 @@ class TaskInfolist
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (Task $record): bool => $record->trashed()),
+                RepeatableEntry::make('attachments')
+                    ->label('Attachments')
+                    ->schema([
+                        TextEntry::make('name')
+                            ->label('File Name')
+                            ->url(fn ($record) => asset('storage/' . $record->path))
+                            ->openUrlInNewTab(),
+                        TextEntry::make('size')
+                            ->label('Size')
+                            ->formatStateUsing(fn ($state) => $state ? number_format($state / 1024, 2) . ' KB' : 'Unknown'),
+                    ])
+                    ->columnSpanFull()
+                    ->visible(fn (Task $record): bool => $record->attachments()->exists()),
             ]);
     }
 }
