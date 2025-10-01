@@ -25,7 +25,8 @@
                             <div draggable="true"
                                 @dragstart="draggedTask = {{ $task->id }}; draggedFrom = {{ $status->id }}; $el.classList.add('opacity-50');"
                                 @dragend="draggedTask = null; draggedFrom = null; $el.classList.remove('opacity-50');"
-                                class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg shadow cursor-move hover:shadow-md transition-shadow">
+                                @click="$wire.mountAction('viewTask', { task: {{ $task->id }} })"
+                                class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg shadow cursor-pointer hover:shadow-md transition-shadow">
                                 <h4 class="font-semibold text-gray-900 dark:text-white mb-2">
                                     {{ $task->title }}
                                 </h4>

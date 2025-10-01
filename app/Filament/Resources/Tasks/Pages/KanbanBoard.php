@@ -2,19 +2,23 @@
 
 namespace App\Filament\Resources\Tasks\Pages;
 
-use App\Filament\Resources\Tasks\Schemas\TaskForm;
+use App\Filament\Resources\Tasks\Schemas\TaskInfolist;
 use App\Filament\Resources\Tasks\TaskResource;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
 class KanbanBoard extends Page
@@ -72,9 +76,23 @@ class KanbanBoard extends Page
                                 ->minValue(0)
                                 ->suffix('min')
                                 ->helperText('Estimated time to complete this task in minutes'),
-                        ])
-                ])
+                        ]),
+                ]),
         ];
+    }
+
+    public function viewTaskAction(): Action
+    {
+        return Action::make('viewTask')
+            ->modalHeading(fn(array $arguments) => Task::find($arguments['task'])?->title ?? 'View Task')
+            ->schema(function (array $arguments) {
+                $task = Task::with(['project', 'status', 'attachments'])->find($arguments['task']);
+                return TaskInfolist::kanban(Schema::make())->record($task)->getComponents();
+
+            })
+            ->modalWidth('2xl')
+            ->modalSubmitAction(false)
+            ->modalCancelActionLabel('Close');
     }
 
     public function updateTaskStatus(int $taskId, int $statusId): void

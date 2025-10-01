@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Tasks\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
@@ -19,12 +20,13 @@ class TasksTable
 
         return $table
             ->columns([
-                TextColumn::make('project.title')
-                    ->searchable(),
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('status.name')
+                TextColumn::make('project.title')
                     ->searchable(),
+                TextColumn::make('status.name')
+                    ->searchable(isIndividual: true )
+                    ->sortable(),
                 TextColumn::make('due_at')
                     ->dateTime()
                     ->sortable(),
@@ -47,6 +49,7 @@ class TasksTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
