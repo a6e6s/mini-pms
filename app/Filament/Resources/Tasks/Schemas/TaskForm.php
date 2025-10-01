@@ -16,6 +16,8 @@ class TaskForm
         return $schema
             ->components([
                 Select::make('project_id')
+                    ->searchable()
+                    ->preload()
                     ->relationship('project', 'title')
                     ->required(),
                 TextInput::make('title')
