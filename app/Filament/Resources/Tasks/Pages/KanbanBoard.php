@@ -5,8 +5,10 @@ namespace App\Filament\Resources\Tasks\Pages;
 use App\Filament\Resources\Tasks\Schemas\TaskForm;
 use App\Filament\Resources\Tasks\TaskResource;
 use App\Models\Comment;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskStatus;
+use App\Models\User;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
@@ -14,6 +16,11 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\ViewField;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Filament\Navigation\Tab;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 
 class KanbanBoard extends Page
 {
@@ -22,6 +29,46 @@ class KanbanBoard extends Page
     protected static string $resource = TaskResource::class;
 
     protected string $view = 'filament.resources.tasks.pages.kanban-board';
+
+    public ?string $activeTab = 'all';
+
+    public ?int $selectedProject = null;
+
+    public ?int $selectedUser = null;
+
+    public function mount(): void
+    {
+        $this->activeTab = 'all';
+        $this->selectedProject = null;
+        $this->selectedUser = null;
+    }
+
+    #[On('filter-tasks')]
+    public function filterTasks(): void
+    {
+        // The view data will be automatically re-computed
+        $this->dispatch('$refresh');
+    }
+
+    public function setActiveTab(string $tabId): void
+    {
+        $this->activeTab = $tabId;
+        $this->selectedProject = null;
+        $this->selectedUser = null;
+        $this->dispatch('filter-tasks');
+    }
+
+    public function updatedSelectedProject($value): void
+    {
+        $this->selectedProject = $value ?: null;
+        $this->dispatch('filter-tasks');
+    }
+
+    public function updatedSelectedUser($value): void
+    {
+        $this->selectedUser = $value ?: null;
+        $this->dispatch('filter-tasks');
+    }
 
     protected static ?string $navigationLabel = 'Kanban Board';
 
@@ -86,7 +133,7 @@ class KanbanBoard extends Page
                         ])
                         ->action(function (array $data, Action $action) use ($taskId) {
                             Comment::create([
-                                'user_id' => auth()->id(),
+                                'user_id' => Auth::id(),
                                 'commentable_type' => Task::class,
                                 'commentable_id' => $taskId,
                                 'body' => $data['comment_body'],
@@ -104,14 +151,43 @@ class KanbanBoard extends Page
     public function updateTaskStatus(int $taskId, int $statusId): void
     {
         Task::findOrFail($taskId)->update(['status_id' => $statusId]);
+        $this->dispatch('filter-tasks');
     }
 
     protected function getViewData(): array
     {
         return [
             'statuses' => TaskStatus::with(['tasks' => function ($query) {
-                $query->with(['project'])->orderBy('created_at', 'desc');
+                $query->with(['project', 'users'])
+                    ->when($this->selectedProject, fn (Builder $query) =>
+                        $query->where('project_id', $this->selectedProject)
+                    )
+                    ->when($this->selectedUser, fn (Builder $query) =>
+                        $query->whereHas('users', fn ($q) =>
+                            $q->where('users.id', $this->selectedUser)
+                        )
+                    )
+                    ->when($this->activeTab === 'my-tasks', fn (Builder $query) =>
+                        $query->whereHas('users', fn ($q) =>
+                            $q->where('users.id', Auth::id())
+                        )
+                    )
+                    ->when($this->activeTab === 'my-projects', fn (Builder $query) =>
+                        $query->whereHas('project', fn ($q) =>
+                            $q->where('owner_id', Auth::id())
+                        )
+                    )
+                    ->orderBy('created_at', 'desc');
             }])->get(),
+            'projects' => Project::query()
+                ->when($this->activeTab === 'my-projects', fn (Builder $query) =>
+                    $query->where('owner_id', Auth::id())
+                )
+                ->get(),
+            'users' => User::all(),
+            'activeTab' => $this->activeTab,
+            'selectedProject' => $this->selectedProject,
+            'selectedUser' => $this->selectedUser,
         ];
     }
 }

@@ -1,5 +1,44 @@
 <x-filament-panels::page>
     <div class="w-full" x-data="{ draggedTask: null, draggedFrom: null }">
+        {{-- Filters Section --}}
+        <div class="mb-6 space-y-4">
+            <div class="flex justify-between items-center gap-4 flex-wrap">
+                {{-- View Tabs --}}
+                <div class="flex gap-2">
+                    <button wire:click="setActiveTab('all')"
+                        class="px-4 py-2 rounded-lg {{ $activeTab === 'all' ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-700' }}">
+                        All Tasks
+                    </button>
+                    <button wire:click="setActiveTab('my-tasks')"
+                        class="px-4 py-2 rounded-lg {{ $activeTab === 'my-tasks' ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-700' }}">
+                        My Tasks
+                    </button>
+                    <button wire:click="setActiveTab('my-projects')"
+                        class="px-4 py-2 rounded-lg {{ $activeTab === 'my-projects' ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-700' }}">
+                        My Project Tasks
+                    </button>
+                </div>
+
+                {{-- Filters --}}
+                <div class="flex gap-4">
+                    <select wire:model.live="selectedProject" class="rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800">
+                        <option value="">All Projects</option>
+                        @foreach($projects as $project)
+                            <option value="{{ $project->id }}">{{ $project->title }}</option>
+                        @endforeach
+                    </select>
+
+                    <select wire:model.live="selectedUser"
+                        class="rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800">
+                        <option value="">All Users</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="flex gap-6 overflow-x-auto pb-4">
             @foreach ($statuses as $status)
                 <div class="flex flex-col flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg m-1"
