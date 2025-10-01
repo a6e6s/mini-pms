@@ -23,6 +23,8 @@ class Task extends Model
         'description',
         'status_id',
         'due_at',
+        'time_estimated',
+        'time_taken',
     ];
 
     /**
@@ -36,6 +38,8 @@ class Task extends Model
             'id' => 'integer',
             'project_id' => 'integer',
             'status_id' => 'integer',
+            'time_estimated' => 'integer',
+            'time_taken' => 'integer',
             'due_at' => 'datetime',
             'created_at' => 'timestamp',
             'updated_at' => 'timestamp',

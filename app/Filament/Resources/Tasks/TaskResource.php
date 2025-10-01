@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Tasks;
 
 use App\Filament\Resources\Tasks\Pages\CreateTask;
 use App\Filament\Resources\Tasks\Pages\EditTask;
+use App\Filament\Resources\Tasks\Pages\KanbanBoard;
 use App\Filament\Resources\Tasks\Pages\ListTasks;
 use App\Filament\Resources\Tasks\Pages\ViewTask;
 use App\Filament\Resources\Tasks\Schemas\TaskForm;
@@ -17,6 +18,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class TaskResource extends Resource
 {
@@ -25,6 +27,9 @@ class TaskResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Title';
+
+    // add it to the Tasks navigation group
+    protected static UnitEnum|string|null $navigationGroup = 'Tasks';
 
     public static function form(Schema $schema): Schema
     {
@@ -51,9 +56,10 @@ class TaskResource extends Resource
     public static function getPages(): array
     {
         return [
+            'kanban' => KanbanBoard::route('/kanban'),
             'index' => ListTasks::route('/'),
             'create' => CreateTask::route('/create'),
-            'view' => ViewTask::route('/{record}'),
+            // 'view' => ViewTask::route('/{record}'),
             'edit' => EditTask::route('/{record}/edit'),
         ];
     }

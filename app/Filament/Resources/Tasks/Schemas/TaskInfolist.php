@@ -24,6 +24,14 @@ class TaskInfolist
                 TextEntry::make('due_at')
                     ->dateTime()
                     ->placeholder('-'),
+                TextEntry::make('time_estimated')
+                    ->label('Estimated Time')
+                    ->formatStateUsing(fn ($state) => $state ? $state.' min' : '-')
+                    ->placeholder('-'),
+                TextEntry::make('time_taken')
+                    ->label('Time Taken')
+                    ->formatStateUsing(fn ($state) => $state ? $state.' min' : '-')
+                    ->placeholder('-'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -38,11 +46,11 @@ class TaskInfolist
                     ->schema([
                         TextEntry::make('name')
                             ->label('File Name')
-                            ->url(fn ($record) => asset('storage/' . $record->path))
+                            ->url(fn ($record) => asset('storage/'.$record->path))
                             ->openUrlInNewTab(),
                         TextEntry::make('size')
                             ->label('Size')
-                            ->formatStateUsing(fn ($state) => $state ? number_format($state / 1024, 2) . ' KB' : 'Unknown'),
+                            ->formatStateUsing(fn ($state) => $state ? number_format($state / 1024, 2).' KB' : 'Unknown'),
                     ])
                     ->columnSpanFull()
                     ->visible(fn (Task $record): bool => $record->attachments()->exists()),
