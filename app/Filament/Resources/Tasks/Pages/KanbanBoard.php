@@ -2,23 +2,17 @@
 
 namespace App\Filament\Resources\Tasks\Pages;
 
-use App\Filament\Resources\Tasks\Schemas\TaskInfolist;
+use App\Filament\Resources\Tasks\Schemas\TaskForm;
 use App\Filament\Resources\Tasks\TaskResource;
+use App\Models\Comment;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\ViewField;
 use Filament\Resources\Pages\Page;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
 class KanbanBoard extends Page
@@ -44,53 +38,65 @@ class KanbanBoard extends Page
             CreateAction::make()
                 ->label('New Task')
                 ->model(Task::class)
-                ->schema([
-                    Section::make('Task Details')
-                        ->columns(2)
-                        ->schema([
-                            Select::make('project_id')
-                                ->searchable()
-                                ->relationship('project', 'title')
-                                ->required()
-                                ->preload(),
-                            TextInput::make('title')
-                                ->required(),
-                            Textarea::make('description')
-                                ->default(null)
-                                ->columnSpanFull(),
-                            Select::make('status_id')
-                                ->relationship('status', 'name')->default(1)
-                                ->required(),
-                            FileUpload::make('attachments')
-                                ->label('Attachments')
-                                ->multiple()
-                                ->disk('public')
-                                ->directory('attachments/tasks')
-                                ->fetchFileInformation(true)
-                                ->acceptedFileTypes(['application/pdf', 'image/*', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'])
-                                ->maxSize(10240), // 10MB,
-                            DateTimePicker::make('due_at'),
-                            TextInput::make('time_estimated')
-                                ->label('Estimated Time (minutes)')
-                                ->numeric()
-                                ->minValue(0)
-                                ->suffix('min')
-                                ->helperText('Estimated time to complete this task in minutes'),
-                        ]),
-                ]),
+                ->form(fn ($form) => TaskForm::configure($form)),
         ];
+    }
+
+    public function updateTask($taskId, $field, $value)
+    {
+        $task = Task::findOrFail($taskId);
+        $task->update([$field => $value]);
+
+        $this->dispatch('task-field-updated');
     }
 
     public function viewTaskAction(): Action
     {
         return Action::make('viewTask')
-            ->modalHeading(fn(array $arguments) => Task::find($arguments['task'])?->title ?? 'View Task')
-            ->schema(function (array $arguments) {
-                $task = Task::with(['project', 'status', 'attachments'])->find($arguments['task']);
-                return TaskInfolist::kanban(Schema::make())->record($task)->getComponents();
+            ->modalHeading(fn (array $arguments) => Task::find($arguments['task'])?->title ?? 'View Task')
+            ->form(function (array $arguments) {
+                $task = Task::with(['project', 'status', 'comments.user'])->find($arguments['task']);
 
+                return [
+                    ViewField::make('task_details')
+                        ->view('filament.forms.components.inline-editable-task', [
+                            'task' => $task,
+                        ])
+                        ->columnSpanFull(),
+                ];
             })
-            ->modalWidth('2xl')
+            ->fillForm(fn (array $arguments) => [
+                'task_id' => $arguments['task'],
+            ])
+            ->modalWidth('3xl')
+            ->modalFooterActions(function (array $arguments) {
+                $taskId = $arguments['task'];
+
+                return [
+                    Action::make('addComment')
+                        ->label('Add Comment')
+                        ->icon(Heroicon::ChatBubbleBottomCenterText)
+                        ->color('primary')
+                        ->form([
+                            Textarea::make('comment_body')
+                                ->label('Your Comment')
+                                ->required()
+                                ->rows(3)
+                                ->placeholder('Write your comment here...'),
+                        ])
+                        ->action(function (array $data, Action $action) use ($taskId) {
+                            Comment::create([
+                                'user_id' => auth()->id(),
+                                'commentable_type' => Task::class,
+                                'commentable_id' => $taskId,
+                                'body' => $data['comment_body'],
+                            ]);
+                            // Remount to refresh the view
+                            $this->replaceMountedAction('viewTask', ['task' => $taskId]);
+                        })
+                        ->successNotificationTitle('Comment added successfully'),
+                ];
+            })
             ->modalSubmitAction(false)
             ->modalCancelActionLabel('Close');
     }

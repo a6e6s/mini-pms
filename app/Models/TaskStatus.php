@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TaskStatusColors;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,7 @@ class TaskStatus extends Model
      */
     protected $fillable = [
         'name',
+        'color',
     ];
 
     /**
@@ -31,6 +33,7 @@ class TaskStatus extends Model
             'id' => 'integer',
             'created_at' => 'timestamp',
             'updated_at' => 'timestamp',
+            'color' => TaskStatusColors::class,
         ];
     }
 

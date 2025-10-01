@@ -17,7 +17,8 @@ class TaskStatusesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->color(fn ($record) => $record->color->value),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

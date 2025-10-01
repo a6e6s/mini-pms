@@ -2,7 +2,18 @@
     <div class="w-full" x-data="{ draggedTask: null, draggedFrom: null }">
         <div class="flex gap-6 overflow-x-auto pb-4">
             @foreach ($statuses as $status)
-                <div class="flex flex-col flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
+                <div class="flex flex-col flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg m-1"
+                    :class="{
+                        'ring-1': true,
+                        'ring-primary-300': '{{ $status->color }}' === 'primary',
+                        'ring-secondary-300': '{{ $status->color }}' === 'secondary',
+                        'ring-success-300': '{{ $status->color }}' === 'success',
+                        'ring-warning-300': '{{ $status->color }}' === 'warning',
+                        'ring-danger-300': '{{ $status->color }}' === 'danger',
+                        'ring-info-300': '{{ $status->color }}' === 'info',
+                        'ring-gray-300': '{{ $status->color }}' === 'light',
+                        'ring-gray-500': '{{ $status->color }}' === 'dark'
+                    }"
                     @dragover.prevent="$el.classList.add('bg-gray-100', 'dark:bg-gray-700')"
                     @dragleave="$el.classList.remove('bg-gray-100', 'dark:bg-gray-700')"
                     @drop.prevent="
@@ -12,7 +23,17 @@
                         }
                     ">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        <h3 class="text-lg font-semibold"
+                            :class="{
+                                'text-primary-600 dark:text-primary-400': '{{ $status->color }}' === 'primary',
+                                'text-secondary-600 dark:text-secondary-400': '{{ $status->color }}' === 'secondary',
+                                'text-success-600 dark:text-success-400': '{{ $status->color }}' === 'success',
+                                'text-warning-600 dark:text-warning-400': '{{ $status->color }}' === 'warning',
+                                'text-danger-600 dark:text-danger-400': '{{ $status->color }}' === 'danger',
+                                'text-info-600 dark:text-info-400': '{{ $status->color }}' === 'info',
+                                'text-gray-600 dark:text-gray-400': '{{ $status->color }}' === 'light',
+                                'text-gray-900 dark:text-gray-100': '{{ $status->color }}' === 'dark'
+                            }">
                             {{ $status->name }}
                         </h3>
                         <span class="text-sm text-gray-500 dark:text-gray-400">
