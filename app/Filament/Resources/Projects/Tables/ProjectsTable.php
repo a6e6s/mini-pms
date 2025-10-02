@@ -20,17 +20,22 @@ class ProjectsTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('app.fields.title'))
                     ->searchable(),
                 TextColumn::make('owner.name')
+                    ->label(__('app.fields.owner'))
                     ->searchable(),
                 TextColumn::make('due_at')
+                    ->label(__('app.fields.due_at'))
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('app.fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('app.fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

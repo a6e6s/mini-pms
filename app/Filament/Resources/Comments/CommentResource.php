@@ -29,6 +29,16 @@ class CommentResource extends Resource
         return false;
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('app.resources.comments');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app.resources.comments');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return CommentForm::configure($schema);

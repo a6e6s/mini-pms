@@ -31,6 +31,16 @@ class AttachmentResource extends Resource
         return false;
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('app.resources.attachments');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app.resources.attachments');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AttachmentForm::configure($schema);

@@ -14,8 +14,10 @@ class TaskStatusForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('app.fields.name'))
                     ->required(),
                 Select::make('color')
+                    ->label(__('app.fields.color'))
                     ->options(TaskStatusColors::class)
                     ->required()
                     ->native(false),

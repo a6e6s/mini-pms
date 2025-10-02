@@ -26,10 +26,24 @@ class TaskResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Title';
+    protected static ?string $recordTitleAttribute = 'title';
 
-    // add it to the Tasks navigation group
-    protected static UnitEnum|string|null $navigationGroup = 'Tasks';
+    protected static UnitEnum|string|null $navigationGroup = null;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('app.navigation.tasks');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('app.resources.tasks');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app.resources.tasks');
+    }
 
     public static function form(Schema $schema): Schema
     {

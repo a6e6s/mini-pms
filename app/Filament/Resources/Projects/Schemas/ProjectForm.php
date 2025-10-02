@@ -16,9 +16,12 @@ class ProjectForm
     {
         return $schema
             ->components([
-                TextInput::make('title')->columnSpanFull()
+                TextInput::make('title')
+                    ->label(__('app.fields.title'))
+                    ->columnSpanFull()
                     ->required(),
                 MarkdownEditor::make('description')
+                    ->label(__('app.fields.description'))
                     ->fileAttachmentsDirectory('attachments/projects')
                     ->toolbarButtons([
                         ['bold', 'italic', 'strike', 'link'],
@@ -30,11 +33,13 @@ class ProjectForm
                     ])->columnSpanFull(),
 
                 Select::make('owner_id')
+                    ->label(__('app.fields.owner'))
                     ->relationship('owner', 'name')
                     ->required(),
-                DateTimePicker::make('due_at'),
+                DateTimePicker::make('due_at')
+                    ->label(__('app.fields.due_at')),
                 FileUpload::make('attachments')
-                    ->label('Attachments')
+                    ->label(__('app.fields.attachments'))
                     ->multiple()
                     ->disk('public')
                     //make the file not thumbnail

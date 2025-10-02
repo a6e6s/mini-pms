@@ -24,7 +24,17 @@ class ProjectResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::BuildingOffice2;
 
-    protected static ?string $recordTitleAttribute = 'Title';
+    protected static ?string $recordTitleAttribute = 'title';
+
+    public static function getModelLabel(): string
+    {
+        return __('app.resources.projects');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app.resources.projects');
+    }
 
     public static function form(Schema $schema): Schema
     {

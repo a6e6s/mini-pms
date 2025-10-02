@@ -17,13 +17,16 @@ class TaskStatusesTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('app.fields.name'))
                     ->searchable()
                     ->color(fn ($record) => $record->color->value),
                 TextColumn::make('created_at')
+                    ->label(__('app.fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('app.fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
