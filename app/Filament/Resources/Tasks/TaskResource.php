@@ -35,6 +35,11 @@ class TaskResource extends Resource
         return __('app.navigation.tasks');
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('app.resources.tasks');
+    }
+
     public static function getModelLabel(): string
     {
         return __('app.resources.tasks');

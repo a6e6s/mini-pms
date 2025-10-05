@@ -35,8 +35,13 @@ $translations = [
         'attachments' => 'Attachments',
         'name' => 'Name',
         'email' => 'Email',
+        'email_address' => 'Email Address',
+        'address' => 'Address',
         'password' => 'Password',
         'role' => 'Role',
+        'user_role' => 'User Role',
+        'phone' => 'Phone',
+        'active' => 'Active',
         'owner' => 'Owner',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
@@ -50,6 +55,11 @@ $translations = [
         'time_estimated' => 'Time Estimated (minutes)',
         'select_user' => 'Select User',
         'your_comment' => 'Your Comment',
+        'user_id' => 'User ID',
+        'full_name' => 'Full Name',
+        'phone_number' => 'Phone Number',
+        'registered_at' => 'Registered At',
+        'last_updated' => 'Last Updated',
     ],
 
     // Kanban Board
@@ -103,6 +113,12 @@ $translations = [
         'all' => 'All',
         'active' => 'Active',
         'inactive' => 'Inactive',
+    ],
+
+    // Sections
+    'sections' => [
+        'user_information' => 'User Information',
+        'user_details' => 'User Details',
     ],
 
     // Form Labels

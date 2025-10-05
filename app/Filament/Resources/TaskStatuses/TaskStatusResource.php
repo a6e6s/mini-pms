@@ -24,6 +24,11 @@ class TaskStatusResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('app.resources.task_statuses');
+    }
+
     public static function getModelLabel(): string
     {
         return __('app.resources.task_statuses');

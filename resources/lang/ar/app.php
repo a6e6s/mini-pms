@@ -35,8 +35,13 @@ return [
         'attachments' => 'المرفقات',
         'name' => 'الاسم',
         'email' => 'البريد الإلكتروني',
+        'email_address' => 'عنوان البريد الإلكتروني',
+        'address' => 'العنوان',
         'password' => 'كلمة المرور',
         'role' => 'الدور',
+        'user_role' => 'دور المستخدم',
+        'phone' => 'الهاتف',
+        'active' => 'نشط',
         'owner' => 'المالك',
         'created_at' => 'تاريخ الإنشاء',
         'updated_at' => 'تاريخ التحديث',
@@ -50,6 +55,11 @@ return [
         'time_estimated' => 'الوقت المقدر (بالدقائق)',
         'select_user' => 'اختر المستخدم',
         'your_comment' => 'تعليقك',
+        'user_id' => 'معرف المستخدم',
+        'full_name' => 'الاسم الكامل',
+        'phone_number' => 'رقم الهاتف',
+        'registered_at' => 'تاريخ التسجيل',
+        'last_updated' => 'آخر تحديث',
     ],
 
     // Kanban Board
@@ -103,6 +113,12 @@ return [
         'all' => 'الكل',
         'active' => 'نشط',
         'inactive' => 'غير نشط',
+    ],
+
+    // Sections
+    'sections' => [
+        'user_information' => 'معلومات المستخدم',
+        'user_details' => 'تفاصيل المستخدم',
     ],
 
     // Form Labels

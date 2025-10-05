@@ -50,10 +50,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('kanban')
-                    ->label('Task Kanban')
+                    ->label(__('app.navigation.kanban_board'))
                     ->url(fn () => route('filament.admin.resources.tasks.kanban'))
                     ->icon(Heroicon::OutlinedViewColumns)
-                    ->group('Tasks')
+                    ->group(__('app.navigation.tasks'))
                     ->sort(1),
             ])
             ->middleware([

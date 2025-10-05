@@ -26,6 +26,11 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('app.resources.users');
+    }
+
     public static function getModelLabel(): string
     {
         return __('app.resources.users');

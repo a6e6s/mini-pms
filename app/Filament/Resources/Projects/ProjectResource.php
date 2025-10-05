@@ -26,6 +26,11 @@ class ProjectResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('app.resources.projects');
+    }
+
     public static function getModelLabel(): string
     {
         return __('app.resources.projects');

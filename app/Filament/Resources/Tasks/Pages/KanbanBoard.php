@@ -74,6 +74,10 @@ class KanbanBoard extends Page
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedViewColumns;
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('app.navigation.tasks');
+    }
     public static function getNavigationLabel(): string
     {
         return __('app.navigation.kanban_board');
