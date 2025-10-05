@@ -16,6 +16,10 @@ use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
+use App\Filament\Widgets\ProjectsStatsWidget;
+use App\Filament\Widgets\ProjectProgressWidget;
+use App\Filament\Widgets\TaskStatusesChartWidget;
+use App\Filament\Widgets\ProjectsByStatusTableWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -34,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->colors(['primary' => Color::Amber])
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->renderHook('panels::topbar.end', fn () => view('filament.language-switcher'))
+            ->renderHook('panels::topbar.end', fn() => view('filament.language-switcher'))
             ->maxContentWidth(Width::Full)
             ->collapsedSidebarWidth('true')
 
@@ -45,15 +49,20 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                // AccountWidget::class,
+                ProjectsStatsWidget::class,
+                TaskStatusesChartWidget::class,
+                ProjectsByStatusTableWidget::class,
+                ProjectProgressWidget::class,
             ])
             ->navigationItems([
-                NavigationItem::make('kanban')
+                NavigationItem::make('Kanban Board')
                     ->label(__('app.navigation.kanban_board'))
-                    ->url(fn () => route('filament.admin.resources.tasks.kanban'))
+                    ->url(fn() => route('filament.admin.resources.tasks.kanban'))
                     ->icon(Heroicon::OutlinedViewColumns)
                     ->group(__('app.navigation.tasks'))
+                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.resources.tasks.kanban'))
+
                     ->sort(1),
             ])
             ->middleware([

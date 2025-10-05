@@ -50,6 +50,11 @@ class KanbanBoard extends Page
         $this->dispatch('$refresh');
     }
 
+    protected function getNavigationItemActive(): bool
+    {
+        return true;
+    }
+
     public function setActiveTab(string $tabId): void
     {
         $this->activeTab = $tabId;

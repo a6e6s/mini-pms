@@ -134,6 +134,22 @@ return [
         'estimated_time_help' => 'الوقت المقدر لإكمال هذه المهمة بالدقائق',
     ],
 
+    // Widgets
+    'widgets' => [
+        'total_projects' => 'إجمالي المشاريع',
+        'all_projects_count' => 'عدد جميع المشاريع',
+        'avg_completed' => 'متوسط المكتمل',
+        'average_completion_rate' => 'متوسط معدل الإنجاز',
+        'avg_incomplete' => 'متوسط غير المكتمل',
+        'average_incomplete_rate' => 'متوسط معدل غير المكتمل',
+        'task_statuses_distribution' => 'توزيع حالات المهام',
+        'tasks_count' => 'عدد المهام',
+        'projects_by_status' => 'المشاريع حسب حالة المهمة',
+        'total_tasks' => 'إجمالي المهام',
+        'projects_completion_progress' => 'تقدم إنجاز المشاريع',
+        'completion_percentage' => 'نسبة الإنجاز %',
+    ],
+
     // Global enum translations
     'Admin' => 'مشرف',
     'User' => 'مستخدم',

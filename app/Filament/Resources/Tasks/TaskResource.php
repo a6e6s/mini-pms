@@ -30,10 +30,10 @@ class TaskResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = null;
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('app.navigation.tasks');
-    }
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return __('app.navigation.tasks');
+    // }
 
     public static function getNavigationLabel(): string
     {

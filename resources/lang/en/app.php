@@ -134,6 +134,22 @@ $translations = [
         'estimated_time_help' => 'Estimated time to complete this task in minutes',
     ],
 
+    // Widgets
+    'widgets' => [
+        'total_projects' => 'Total Projects',
+        'all_projects_count' => 'All projects count',
+        'avg_completed' => 'Avg. Completed',
+        'average_completion_rate' => 'Average completion rate',
+        'avg_incomplete' => 'Avg. Incomplete',
+        'average_incomplete_rate' => 'Average incomplete rate',
+        'task_statuses_distribution' => 'Task Statuses Distribution',
+        'tasks_count' => 'Tasks Count',
+        'projects_by_status' => 'Projects by Task Status',
+        'total_tasks' => 'Total Tasks',
+        'projects_completion_progress' => 'Projects Completion Progress',
+        'completion_percentage' => 'Completion %',
+    ],
+
     // Global enum translations
     'Admin' => 'Admin',
     'User' => 'User',
