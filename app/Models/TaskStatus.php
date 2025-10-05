@@ -20,6 +20,7 @@ class TaskStatus extends Model
     protected $fillable = [
         'name',
         'color',
+        'is_active',
     ];
 
     /**
@@ -35,6 +36,12 @@ class TaskStatus extends Model
             'updated_at' => 'timestamp',
             'color' => TaskStatusColors::class,
         ];
+    }
+
+    //scope for active statuses
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
     }
 
     public function tasks(): HasMany

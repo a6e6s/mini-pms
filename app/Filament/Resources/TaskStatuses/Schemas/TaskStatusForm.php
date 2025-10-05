@@ -5,6 +5,8 @@ namespace App\Filament\Resources\TaskStatuses\Schemas;
 use App\Enums\TaskStatusColors;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Schema;
 
 class TaskStatusForm
@@ -21,6 +23,10 @@ class TaskStatusForm
                     ->options(TaskStatusColors::class)
                     ->required()
                     ->native(false),
+                Toggle::make('is_active')
+                    ->label(__('app.fields.status'))
+                    ->default(true)
+                    ->required(),
             ]);
     }
 }

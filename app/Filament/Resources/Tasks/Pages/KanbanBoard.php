@@ -216,7 +216,7 @@ class KanbanBoard extends Page
                         )
                     )
                     ->orderBy('created_at', 'desc');
-            }])->get(),
+            }])->active()->get(),
             'projects' => Project::query()
                 ->when(
                     $this->activeTab === 'my-projects',

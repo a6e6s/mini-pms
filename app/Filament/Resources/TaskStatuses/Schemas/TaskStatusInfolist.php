@@ -22,6 +22,10 @@ class TaskStatusInfolist
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (TaskStatus $record): bool => $record->trashed()),
+                //adding is active switch
+                TextEntry::make('is_active')
+                    ->label(__('app.fields.status'))->badge('secondary')
+                    ->formatStateUsing(fn (bool $state): string => $state ? __('Active') : __('Inactive')),
             ]);
     }
 }
