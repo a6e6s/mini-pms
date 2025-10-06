@@ -26,6 +26,10 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament-shield.nav.group');
+    }
     public static function getNavigationLabel(): string
     {
         return __('app.resources.users');

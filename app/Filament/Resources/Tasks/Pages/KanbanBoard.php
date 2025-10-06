@@ -43,6 +43,16 @@ class KanbanBoard extends Page
         $this->selectedUser = null;
     }
 
+
+    /**
+     * Define the permission required to see and access this page.
+     */
+    public static function canAccess($record = null): bool
+    {
+        // Check if the currently logged-in user has this permission
+        return auth()->user()->can('View:Task');
+    }
+
     #[On('filter-tasks')]
     public function filterTasks(): void
     {

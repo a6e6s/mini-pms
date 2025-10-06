@@ -26,19 +26,24 @@ class UserForm
                             ->email()
                             ->unique(ignoreRecord: true)
                             ->required(),
-                        Select::make('role')
-                            ->label(__('app.fields.role'))
-                            ->options(collect(UserRole::cases())->mapWithKeys(fn ($case) => [
-                                $case->value => $case->getLabel(),
-                            ]))
-                            ->required()
-                            ->default(UserRole::USER->value),
+                        // Select::make('type')
+                        //     ->label(__('app.fields.type'))
+                        //     ->options(collect(UserRole::cases())->mapWithKeys(fn($case) => [
+                        //         $case->value => $case->getLabel(),
+                        //     ]))
+                        //     ->required()
+                        //     ->default(UserRole::USER->value),
+                        Select::make('roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable(),
                         TextInput::make('password')
                             ->label(__('app.fields.password'))
                             ->password()
-                            ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
-                            ->required(fn (string $context): bool => $context === 'create')
-                            ->dehydrated(fn ($state) => filled($state))
+                            ->dehydrateStateUsing(fn($state) => filled($state) ? bcrypt($state) : null)
+                            ->required(fn(string $context): bool => $context === 'create')
+                            ->dehydrated(fn($state) => filled($state))
                             ->maxLength(255)
                             ->minLength(8),
                         TextInput::make('phone')

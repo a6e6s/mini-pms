@@ -13,8 +13,8 @@ class ProjectsStatsWidget extends BaseWidget
     protected function getStats(): array
     {
         $totalProjects = Project::count();
-        $completedStatus = TaskStatus::where('name', 'Done')->first();
-        
+        $completedStatus = TaskStatus::where('name', 'Finished')->first();
+
         $projectsWithTasks = Project::withCount([
             'tasks',
             'tasks as completed_tasks_count' => function ($query) use ($completedStatus) {
@@ -25,8 +25,8 @@ class ProjectsStatsWidget extends BaseWidget
         ])->get();
 
         $avgCompleted = $projectsWithTasks->avg(function ($project) {
-            return $project->tasks_count > 0 
-                ? ($project->completed_tasks_count / $project->tasks_count) * 100 
+            return $project->tasks_count > 0
+                ? ($project->completed_tasks_count / $project->tasks_count) * 100
                 : 0;
         });
 

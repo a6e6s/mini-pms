@@ -6,5 +6,9 @@
     "Testing": "قيد الاختبار",
     "Cancelled": "ملغي",
     "Finished": "منتهي",
-    "kanban_board": "لوحة كانبان"
+    "kanban_board": "لوحة كانبان",
+    "Super admin": "مشرف عام",
+    "Admin": "مشرف",
+    "User": "مستخدم",
+    "Supervisor": "مشرف"
 }

@@ -29,8 +29,9 @@ class UsersTable
                 TextColumn::make('email')
                     ->label(__('app.fields.email_address'))
                     ->searchable(isIndividual: true),
-                TextColumn::make('role')
+                TextColumn::make('roles.name')
                     ->label(__('app.fields.user_role'))
+                    ->formatStateUsing(fn($record) => __($record->roles[0]->name))
                     ->badge(),
                 ToggleColumn::make('is_active')
                     ->label(__('app.fields.active'))

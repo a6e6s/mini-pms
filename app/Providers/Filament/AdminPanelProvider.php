@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Http\Middleware\SetLocale;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -36,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->colors(['primary' => Color::Amber])
+            ->colors(['primary' => Color::Green,'secondary'=> Color::Blue])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->renderHook('panels::topbar.end', fn() => view('filament.language-switcher'))
             ->maxContentWidth(Width::Full)
@@ -62,7 +63,8 @@ class AdminPanelProvider extends PanelProvider
                     ->icon(Heroicon::OutlinedViewColumns)
                     ->group(__('app.navigation.tasks'))
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.resources.tasks.kanban'))
-
+                // hide when user doesn't have permission
+                    ->visible(fn(): bool => auth()->user()->can('ViewAny:Task'))
                     ->sort(1),
             ])
             ->middleware([
@@ -76,6 +78,9 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 SetLocale::class,
+            ])
+            ->plugins([
+                FilamentShieldPlugin::make(),
             ])
             ->authMiddleware([
                 Authenticate::class,
