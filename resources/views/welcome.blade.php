@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="نظام العالمية لإدارة المشاريع - تبسيط سير عمل مشروعك">
+        <meta name="description" content="نظام  لإدارة المشاريع - تبسيط سير عمل مشروعك">
 
-        <title>العالمية لإدارة المشاريع - {{ config('app.name', 'Laravel') }}</title>
+        <title> لإدارة المشاريع - {{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -24,7 +24,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center space-x-reverse space-x-8">
-                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-200 text-transparent bg-clip-text">العالمية لإدارة المشاريع</span>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-200 text-transparent bg-clip-text">إدارة المشاريع</span>
                         <nav class="hidden md:flex items-center space-x-reverse space-x-6">
                             <a href="#features" class="text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 text-sm font-medium">المميزات</a>
                             <a href="#about" class="text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 text-sm font-medium">حول</a>
@@ -105,7 +105,7 @@
             <main class="max-w-7xl mx-auto w-full">
                 <div class="text-center mb-16">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 dark:from-blue-300 dark:via-blue-400 dark:to-blue-300 text-transparent bg-clip-text mb-6">
-                        قم بتبسيط مشاريعك<br>مع نظام العالمية لإدارة المشاريع
+                        قم بتبسيط مشاريعك<br>مع نظام إدارة المشاريع
                     </h1>
                     <p class="max-w-2xl mx-auto text-lg text-blue-700/70 dark:text-blue-200/80">
                         أداة خفيفة وبديهية مصممة لمساعدة الفرق على تخطيط وتتبع وتسليم المشاريع بشكل أسرع. مبنية لتكون بسيطة وقوية في نفس الوقت، تساعدك العالمية على التركيز على العمل المهم.
@@ -214,7 +214,7 @@
 
                 <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 rounded-2xl p-12 text-center mb-16 shadow-lg shadow-blue-200 dark:shadow-blue-900/20">
                     <h2 class="text-3xl font-bold text-white dark:text-white mb-6">هل أنت مستعد لتبسيط سير عملك؟</h2>
-                    <p class="text-blue-100 dark:text-blue-100 mb-8 max-w-2xl mx-auto">انضم إلى آلاف الفرق التي تستخدم نظام العالمية لإدارة مشاريعها بكفاءة أعلى.</p>
+                    <p class="text-blue-100 dark:text-blue-100 mb-8 max-w-2xl mx-auto">انضم إلى آلاف الفرق التي تستخدم نظام إدارة مشاريعها بكفاءة أعلى.</p>
                     @auth
                         <a href="{{ route('filament.admin.pages.dashboard') }}" class="inline-flex items-center px-6 py-3 bg-white text-blue-700 dark:bg-blue-900 dark:text-white rounded-lg hover:bg-blue-50 dark:hover:bg-blue-800 transition-colors duration-200">
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +255,7 @@
                         </div>
                     </div>
                     <div class="mt-8 pt-8 border-t border-gray-200/10 dark:border-gray-800/50">
-                        <p>&copy; {{ date('Y') }} العالمية لإدارة المشاريع. جميع الحقوق محفوظة.</p>
+                        <p>&copy; {{ date('Y') }} إدارة المشاريع. جميع الحقوق محفوظة.</p>
                     </div>
                 </footer>
             </main>

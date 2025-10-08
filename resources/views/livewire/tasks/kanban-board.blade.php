@@ -4,7 +4,7 @@
 }">
     <div class="flex gap-6 overflow-x-auto pb-4">
         @foreach ($statuses as $status)
-            <div class="flex flex-col flex-shrink-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
+            <div class="flex flex-col flex-shrink-0 w-120 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
                 x-on:dragover.prevent="$el.classList.add('bg-gray-100', 'dark:bg-gray-700')"
                 x-on:dragleave="$el.classList.remove('bg-gray-100', 'dark:bg-gray-700')"
                 x-on:drop.prevent="
