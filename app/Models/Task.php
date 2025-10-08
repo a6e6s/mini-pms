@@ -67,6 +67,11 @@ class Task extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function activities(): MorphMany
+    {
+        return $this->morphMany(Activity::class, 'loggable')->latest();
+    }
+
     /**
      * user relationship.
      */

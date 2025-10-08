@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Tasks\Pages;
 
 use App\Filament\Resources\Tasks\Schemas\TaskForm;
 use App\Filament\Resources\Tasks\TaskResource;
+use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Task;
@@ -13,6 +14,7 @@ use App\Models\User;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\ViewField;
@@ -121,7 +123,7 @@ class KanbanBoard extends Page
         return Action::make('viewTask')
             ->modalHeading(fn(array $arguments) => Task::find($arguments['task'])?->title ?? __('app.kanban.view_task'))
             ->schema(function (array $arguments) {
-                $task = Task::with(['project', 'status', 'comments.user'])->find($arguments['task']);
+                $task = Task::with(['project', 'status', 'comments.user', 'attachments'])->find($arguments['task']);
 
                 return [
                     ViewField::make('task_details')
@@ -157,10 +159,35 @@ class KanbanBoard extends Page
                                 'commentable_id' => $taskId,
                                 'body' => $data['comment_body'],
                             ]);
-                            // Remount to refresh the view
                             $this->replaceMountedAction('viewTask', ['task' => $taskId]);
                         })
                         ->successNotificationTitle(__('app.kanban.comment_added_successfully')),
+                    Action::make('uploadAttachment')
+                        ->label(__('app.kanban.upload_attachment'))
+                        ->icon(Heroicon::PaperClip)
+                        ->color('primary')
+                        ->schema([
+                            FileUpload::make('file')
+                                ->label(__('app.fields.file_name'))
+                                ->required()
+                                ->maxSize(10240)
+                                ->disk('public')
+                                ->directory('attachments'),
+                        ])
+                        ->action(function (array $data) use ($taskId) {
+                            $file = $data['file'];
+                            Attachment::create([
+                                'user_id' => Auth::id(),
+                                'attachable_type' => Task::class,
+                                'attachable_id' => $taskId,
+                                'name' => basename($file),
+                                'path' => $file,
+                                'model' => Task::class,
+                                'size' => \Storage::disk('public')->size($file),
+                            ]);
+                            $this->replaceMountedAction('viewTask', ['task' => $taskId]);
+                        })
+                        ->successNotificationTitle(__('app.kanban.attachment_uploaded_successfully')),
                     Action::make('AssignUser')
                         ->label(__('app.kanban.assign_to'))
                         ->icon(Heroicon::UserPlus)
@@ -181,7 +208,6 @@ class KanbanBoard extends Page
                                     'task_id' => $taskId,
                                 ]);
                             }
-                            // Remount to refresh the view
                             $this->replaceMountedAction('viewTask', ['task' => $taskId]);
                         })
                         ->successNotificationTitle(__('app.kanban.user_assigned_successfully')),

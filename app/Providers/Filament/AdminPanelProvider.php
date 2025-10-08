@@ -21,6 +21,7 @@ use App\Filament\Widgets\ProjectsStatsWidget;
 use App\Filament\Widgets\ProjectProgressWidget;
 use App\Filament\Widgets\TaskStatusesChartWidget;
 use App\Filament\Widgets\ProjectsByStatusTableWidget;
+use App\Filament\Widgets\RecentActivityWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -55,6 +56,7 @@ class AdminPanelProvider extends PanelProvider
                 TaskStatusesChartWidget::class,
                 ProjectsByStatusTableWidget::class,
                 ProjectProgressWidget::class,
+                RecentActivityWidget::class,
             ])
             ->navigationItems([
                 NavigationItem::make('Kanban Board')
